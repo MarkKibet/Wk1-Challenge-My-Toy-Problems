@@ -7,6 +7,7 @@ const rl = createInterface({
 
 function gradeGenerator(marks) {
     if (marks > 79) {
+
         return 'A';
     } else if (marks >= 60) {
         return 'B';
