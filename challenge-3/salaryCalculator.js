@@ -1,4 +1,11 @@
-// PAYE calculation function
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+
 function calculatePAYE(grossSalary) {
     let tax = 0;
 
@@ -62,12 +69,7 @@ function calculateNetSalary(basicSalary, benefits) {
 }
 
 
-const readline = require('readline');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
 
 rl.question('Enter basic salary: ', (basicSalary) => {
     rl.question('Enter benefits: ', (benefits) => {

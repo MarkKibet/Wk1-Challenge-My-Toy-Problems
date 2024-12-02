@@ -1,4 +1,4 @@
-import { createInterface } from 'readline';
+import {createInterface} from 'readline'
 
 const rl = createInterface({
     input: process.stdin,
@@ -21,8 +21,13 @@ function gradeGenerator(marks) {
 
 rl.question('Enter student marks (0-100): ', (input) => {
     let marks = parseInt(input);
-    let grade = gradeGenerator(marks);
-    console.log("The grade is: " + grade);
+
+    if (isNaN(marks) || marks < 0 || marks > 100) {
+        console.log('Please enter a valid mark between 0 and 100.');
+    } else {
+        let grade = gradeGenerator(marks);
+        console.log("The grade is: " + grade);
+    }
+
     rl.close();
 });
-
