@@ -92,34 +92,54 @@ function speedDetector(speed) {
 ```
 The script prompts the user to enter the car's speed and then displays the result based on the calculated points.
 
-### Salary Calculator (Kenya) Explanation
-The Salary Calculator script uses the `readline` module to take user input for basic salary and benefits.
+### Salary Calculator
 
-The script calculates various deductions like PAYE, SHIF, NSSF, and Housing Levy. Here's a breakdown of each function:
+The Salary Calculator script uses the `readline` module to take user input for basic salary and benefits. It calculates various statutory deductions like PAYE (Pay As You Earn), NHIF (National Hospital Insurance Fund), and NSSF (National Social Security Fund) to determine the net salary. Here are detailed explanations of each component:
 
-- `calculatePAYE`: Calculates the PAYE (income tax) based on progressive tax brackets.
-- `calculateSHIF`: Calculates the SHIF deduction as a fixed percentage of the gross salary.
-- `calculateNSSF`: Calculates the NSSF deduction based on tier limits and rates.
-- `calculateHousingLevy`: Calculates the Housing Levy as a fixed percentage of the gross salary.
+#### 1. Reading User Input
 
-The `calculateNetSalary` function integrates all these deductions to compute the net salary:
-```javascript
-function calculateNetSalary(basicSalary, benefits) {
-    let grossSalary = basicSalary + benefits;
-    let paye = calculatePAYE(grossSalary);
-    let shif = calculateSHIF(grossSalary);
-    let nssf = calculateNSSF(grossSalary);
-    let housingLevy = calculateHousingLevy(grossSalary);
+The script uses the `readline` module to read user inputs for basic salary and benefits. This module helps to create an interface for reading data from a readable stream such as `process.stdin` and `process.stdout`.
 
-    let netSalary = grossSalary - paye - shif - nssf - housingLevy;
-    return {
-        grossSalary: grossSalary,
-        paye: paye,
-        shif: shif,
-        nssf: nssf,
-        housingLevy: housingLevy,
-        netSalary: netSalary
-    };
-}
-```
-The script prompts the user to enter the basic salary and benefits, then calculates and displays the gross salary, deductions, and net salary.
+#### 2. Calculating PAYE
+
+PAYE is a progressive tax applied to the gross salary based on predefined brackets:
+- First Bracket (Up to 24,000 Ksh): Taxed at 10%.
+- Second Bracket (24,001 - 32,333 Ksh): First 24,000 Ksh taxed at 10%, the remainder at 25%.
+- Third Bracket (32,334 - 500,000 Ksh): First 24,000 Ksh taxed at 10%, next 8,333 Ksh at 25%, remainder at 30%.
+- Fourth Bracket (500,001 - 800,000 Ksh): First 24,000 Ksh taxed at 10%, next 8,333 Ksh at 25%, next 467,667 Ksh at 30%, remainder at 32.5%.
+- Fifth Bracket (Above 800,000 Ksh): First 24,000 Ksh taxed at 10%, next 8,333 Ksh at 25%, next 467,667 Ksh at 30%, next 300,000 Ksh at 32.5%, and remainder at 35%.
+
+#### 3. Calculating NSSF
+
+NSSF contributions are based on this tier:
+- Tier I: Contributions up to 7,000 Ksh are taxed at 6%.
+
+
+#### 4. Calculating NHIF
+
+NHIF deductions are based on the gross salary with predefined rates for different salary ranges. For instance:
+- Salaries up to 5,999 Ksh are taxed at 150 Ksh.
+- Salaries between 6,000 - 7,999 Ksh are taxed at 300 Ksh.
+- The rates continue to increase with salary, capping at a deduction of 1,700 Ksh for salaries above 100,000 Ksh.
+
+#### 5. Calculating Net Salary
+
+The script calculates the net salary by summing the basic salary and benefits to get the gross salary, then deducting PAYE, NSSF, and NHIF from the gross salary. The steps are as follows:
+1. Calculate Gross Salary: Sum of basic salary and benefits.
+2. Calculate NSSF Deduction: Based on gross salary.
+3. Calculate Taxable Pay: Gross salary minus NSSF.
+4. Calculate PAYE Deduction: Based on taxable pay.
+5. Calculate NHIF Deduction: Based on gross salary.
+6. Calculate Net Salary: Gross salary minus PAYE, NHIF, and NSSF.
+
+#### 6. Output
+
+The script outputs:
+- Gross Salary: The sum of basic salary and benefits.
+- NSSF Deduction: The calculated NSSF contribution.
+- Taxable Pay: The salary amount subject to PAYE after NSSF deduction.
+- PAYE Deduction: The calculated PAYE tax.
+- NHIF Deduction: The calculated NHIF contribution.
+- Net Salary: The remaining salary after all deductions.
+
+These calculations ensure that the script correctly reflects the statutory deductions applied to a typical salary structure in Kenya. This provides a comprehensive view of an employee's take-home pay after all mandatory contributions are accounted for.
