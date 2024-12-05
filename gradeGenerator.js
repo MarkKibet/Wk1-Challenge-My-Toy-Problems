@@ -1,10 +1,7 @@
-// Import the readline module to handle user input
-import { createInterface } from 'readline';
-
-// Creating an interface for reading input and output
-const rl = createInterface({
-    input: process.stdin,  // Standard input (keyboard)
-    output: process.stdout // Standard output (console)
+const readline = require('readline'); 
+const rl = readline.createInterface({ 
+    input: process.stdin, 
+    output: process.stdout 
 });
 
 // Function to generate a grade based on marks
